@@ -1,37 +1,37 @@
 var hours = process.argv[2];
 var minutes = process.argv[3];
 var ascii = { '-':
-        [
-            '            ',
-            '            ',
-            '            ',
-            '   XXXXXX   ',
-            '            ',
-            '            ',
-            '            ',
-        ],
+    [
+        '            ',
+        '            ',
+        '            ',
+        '   XXXXXX   ',
+        '            ',
+        '            ',
+        '            ',
+   ],
     'I':
-        [
-            ' XXXXXXXXXX ',
-            '     XX     ',
-            '     XX     ',
-            '     XX     ',
-            '     XX     ',
-            '     XX     ',
-            ' XXXXXXXXXX ',
-        ],
+    [
+        ' XXXXXXXXXX ',
+        '     XX     ',
+        '     XX     ',
+        '     XX     ',
+        '     XX     ',
+        '     XX     ',
+        ' XXXXXXXXXX ',
+    ],
 'V':
-        [
+    [
         ' X        X ',
         ' XX      XX ',
         '  X      X  ',
         '   XX  XX   ',
         '    X  X    ',
         '     XX     ',
-        '     XX     ',
+'     XX     ',
     ],
  'X':
-        [
+    [
         ' XX      XX ',
         '  XX    XX  ',
         '   XX  XX   ',
@@ -39,22 +39,22 @@ var ascii = { '-':
         '   XX  XX   ',
         '  XX    XX  ',
         ' XX      XX ',
-        ],
+    ],
  'L':
-        [
-        '     XX     ',
-        '     XX     ',
-        '     XX     ',
-        '     XX     ',
-        '     XX     ',
-        '     XX   X ',
-        '    XXXXXXX ',
-        ]
+    [
+        '  XX        ',
+        '  XX        ',
+        '  XX        ',
+        '  XX        ',
+        '  XX        ',
+        '  XX        ',
+        '  XXXXXXXXX ',
+    ]
 
 };
 
 var dots =
-        [
+    [
         '     XX     ',
         '     XX     ',
         '            ',
@@ -62,17 +62,17 @@ var dots =
         '            ',
         '     XX     ',
         '     XX     ',
-        ];
+    ];
 
 function checkTime(hours, minutes) {
     hours = Number(hours);      //если объект не может быть преобразован в число, возвращается NaN
     minutes = Number(minutes);
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || 
+        parseInt(minutes) != minutes || parseInt(hours) != hours) {
         console.log("Время указано не верно");
         return false;
     }
     return true;
-
 }
 
 function arabicToRoman(number) {
@@ -119,7 +119,6 @@ function stringToAscii(romanHours, romanMinutes) {
     }
     return string;
 }
-
 
 var check = checkTime(hours, minutes);
 if (check) {
