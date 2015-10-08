@@ -1,6 +1,9 @@
+'use strict';
 var hours = process.argv[2];
 var minutes = process.argv[3];
-var ascii = { '-':
+var asciiSymHeight = 7;
+var ascii = {
+    '-':
     [
         '            ',
         '            ',
@@ -20,7 +23,7 @@ var ascii = { '-':
         '     XX     ',
         ' XXXXXXXXXX ',
     ],
-'V':
+    'V':
     [
         ' X        X ',
         ' XX      XX ',
@@ -28,9 +31,9 @@ var ascii = { '-':
         '   XX  XX   ',
         '    X  X    ',
         '     XX     ',
-'     XX     ',
+        '     XX     ',
     ],
- 'X':
+    'X':
     [
         ' XX      XX ',
         '  XX    XX  ',
@@ -40,7 +43,7 @@ var ascii = { '-':
         '  XX    XX  ',
         ' XX      XX ',
     ],
- 'L':
+    'L':
     [
         '  XX        ',
         '  XX        ',
@@ -49,26 +52,22 @@ var ascii = { '-':
         '  XX        ',
         '  XX        ',
         '  XXXXXXXXX ',
+    ],
+    ':':
+    [
+         '     XX     ',
+         '     XX     ',
+         '            ',
+         '            ',
+         '            ',
+         '     XX     ',
+         '     XX     ',
     ]
-
 };
 
-var dots =
-    [
-        '     XX     ',
-        '     XX     ',
-        '            ',
-        '            ',
-        '            ',
-        '     XX     ',
-        '     XX     ',
-    ];
-
 function checkTime(hours, minutes) {
-    hours = Number(hours);      //если объект не может быть преобразован в число, возвращается NaN
-    minutes = Number(minutes);
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59 || 
-        parseInt(minutes) != minutes || parseInt(hours) != hours) {
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59 ||
+        !Number.isInteger(minutes) || !Number.isInteger(hours)) {
         console.log("Время указано не верно");
         return false;
     }
@@ -78,11 +77,11 @@ function checkTime(hours, minutes) {
 function arabicToRoman(number) {
     // начинаем с 50(L), потому что больше не может быть по условию
     var romanNumber = "";
-    var l = parseInt(number / 50);
+    var l = Math.floor(number / 50);
     romanNumber = appendSym('L', l, romanNumber);
     number = number % 50;
-    var x = parseInt(number / 10);
-    if (x == 4) {
+    var x = Math.floor(number / 10);
+    if (x === 4) {
         romanNumber += 'XL';
     }
     else {
@@ -107,11 +106,11 @@ function basicRoman(number) {
 
 function stringToAscii(romanHours, romanMinutes) {
     var string = '';
-    for (var j = 0; j < 7; j++) {
+    for (var j = 0; j < asciiSymHeight; j++) {
         for (var i = 0; i < romanHours.length; i++) {
             string += ascii[romanHours[i]][j];
         }
-        string += dots[j];
+        string += ascii[':'][j];
         for (var k = 0; k < romanMinutes.length; k++) {
             string += ascii[romanMinutes[k]][j];
         }
@@ -120,8 +119,9 @@ function stringToAscii(romanHours, romanMinutes) {
     return string;
 }
 
-var check = checkTime(hours, minutes);
-if (check) {
+hours = Number(hours);
+minutes = Number(minutes);
+if (checkTime(hours, minutes)) {
     var romanHours = arabicToRoman(hours);
     var romanMinutes = arabicToRoman(minutes);
     var asciiTime = stringToAscii(romanHours, romanMinutes);
